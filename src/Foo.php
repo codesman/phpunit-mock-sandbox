@@ -8,4 +8,9 @@ class Foo
     {
         return "{$bar->sayBar()} Foo!";
     }
+
+    public function bazBoom(Baz $baz)
+    {
+        return $baz->boom();
+    }
 }

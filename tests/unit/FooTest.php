@@ -7,30 +7,52 @@ use PHPUnit\Framework\TestCase;
 
 class FooTest extends TestCase
 {
+    /**
+     * @var Foo
+     */
+    protected $foo;
+    
+    /**
+     * @var Bar
+     */
+    protected $bar;
+
+    /**
+     * @var Bar
+     */
+    protected $mockBar;
+
+    /**
+     * @var Baz
+     */
+    protected $mockBaz;
+    
+    
+    public function setUp()
+    {
+        $this->foo = new Foo();
+        $this->bar = new Bar();
+        $this->mockBar = $this->createMock(Bar::class);
+        $this->mockBaz = $this->createMock(Baz::class);
+    }
     public function testSayFoo()
     {
-        $foo = new Foo();
-        
-        $mockBar = $this->createMock(Bar::class);
-        $mockBar->method('sayBar')
+        $this->mockBar->method('sayBar')
             ->willReturn("Bar!");
-        $mockBar->expects($this->once())
+        $this->mockBar->expects($this->once())
             ->method('sayBar');
         
-        $this->assertEquals("Bar! Foo!", $foo->sayFoo($mockBar));
+        $this->assertEquals("Bar! Foo!", $this->foo->sayFoo($this->mockBar));
     }
 
     public function testBazBoom()
     {
-        $foo = new Foo();
-        
-        $mockBaz = $this->createMock(Baz::class);
-        $mockBaz->method('boom')
+        $this->mockBaz->method('boom')
             ->willReturn($this->boomDataSource());
         
-        $this->assertEquals($foo->bazBoom($mockBaz), $this->boomDataSource());
+        $this->assertEquals($this->foo->bazBoom($this->mockBaz), $this->boomDataSource());
     }
-    
+     
     public function boomDataSource()
     {
         return json_encode([

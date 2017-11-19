@@ -11,11 +11,6 @@ class FooTest extends TestCase
      * @var Foo
      */
     protected $foo;
-    
-    /**
-     * @var Bar
-     */
-    protected $bar;
 
     /**
      * @var Bar
@@ -31,7 +26,6 @@ class FooTest extends TestCase
     public function setUp()
     {
         $this->foo = new Foo();
-        $this->bar = new Bar();
         $this->mockBar = $this->createMock(Bar::class);
         $this->mockBaz = $this->createMock(Baz::class);
     }
